@@ -2,7 +2,7 @@
 
 namespace VitesseCms\Cli;
 
-use VitesseCms\Core\Services\ConfigService;
+use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Core\Services\UrlService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
 use VitesseCms\Core\Utils\BootstrapUtil;
