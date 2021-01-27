@@ -18,6 +18,6 @@
     }
   },
   "require": {
-    "vitessecms/configuration": "~0.0.6"
+    "vitessecms/configuration": "~0.0.7"
   }
 }
