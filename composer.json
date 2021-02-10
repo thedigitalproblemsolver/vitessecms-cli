@@ -20,6 +20,6 @@
   "require": {
     "vitessecms/configuration": "~0.0.7",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.0.5"
+    "vitessecms/core": "~0.0.6"
   }
 }
