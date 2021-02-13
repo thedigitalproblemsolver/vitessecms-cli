@@ -33,12 +33,12 @@ class BoostrapCli extends Cli
         $loader = new Loader();
         $loader->registerDirs([
             $this->vitessecmsCoreDir.'core/helpers/',
-            $this->vitessecmsCoreDir.'core/utils/'
+            $this->vitessecmsCoreDir.'core/Utils/'
         ])->register();
         $loader->registerNamespaces(
             [
                 'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir.'core/helpers/',
-                'VitesseCms\\Core\\Utils'   => $this->vitessecmsCoreDir.'core/utils/',
+                'VitesseCms\\Core\\Utils'   => $this->vitessecmsCoreDir.'core/Utils/',
             ]
         );
         $loader = BootstrapUtil::addModulesToLoader(

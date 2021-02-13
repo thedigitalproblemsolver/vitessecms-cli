@@ -7,11 +7,11 @@ use VitesseCms\Cli\Utils\CliUtil;
 use Phalcon\Cli\Console as ConsoleApp;
 
 require __DIR__ . '/../../../autoload.php';
-require __DIR__ . '/../../configuration/src/utils/DomainConfigUtil.php';
-require __DIR__ . '/../../core/src/utils/DebugUtil.php';
-require __DIR__ . '/../../configuration/src/utils/AccountConfigUtil.php';
-require __DIR__ . '/../../configuration/src/services/ConfigService.php';
-require __DIR__ . '/../../core/src/services/UrlService.php';
+require __DIR__ . '/../../configuration/src/Utils/DomainConfigUtil.php';
+require __DIR__ . '/../../core/src/Utils/DebugUtil.php';
+require __DIR__ . '/../../configuration/src/Utils/AccountConfigUtil.php';
+require __DIR__ . '/../../configuration/src/Services/ConfigService.php';
+require __DIR__ . '/../../core/src/Services/UrlService.php';
 require 'BoostrapCli.php';
 
 if (count($argv) < 4) {

@@ -115,11 +115,11 @@ class DeployTask extends Task
         //TODO add to module walkthrough adn move to different packages
         $jsMapping = new MappingIterator([
             new Mapping(
-                $this->vendorDir.'vitessecms/filemanager/src/resources/js/*',
+                $this->vendorDir.'vitessecms/filemanager/src/Resources/js/*',
                 $this->publicHtmlDir.'assets/default/js/'
             ),
             new Mapping(
-                $this->vitesseCmsSrcDir.'core/resources/js/*',
+                $this->vitesseCmsSrcDir.'core/Resources/js/*',
                 $this->publicHtmlDir.'assets/default/js/'
             ),
             new Mapping(
