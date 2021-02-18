@@ -11,7 +11,7 @@ class CliUtil
         foreach ($args as $k => $arg) {
             switch ($k) :
                 case 1:
-                    $arguments['task'] = 'VitesseCms\Cli\Tasks\\'.ucfirst($arg);
+                    $arguments['task'] = 'VitesseCms\Cli\Tasks\\' . ucfirst($arg);
                     break;
                 case 2:
                     $arguments['action'] = $arg;

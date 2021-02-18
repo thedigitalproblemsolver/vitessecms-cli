@@ -23,7 +23,7 @@ class BoostrapCli extends Cli
     {
         parent::__construct();
 
-        $this->vitessecmsCoreDir = str_replace('cli', 'vitessecms', __DIR__).'/';
+        $this->vitessecmsCoreDir = str_replace('cli', 'vitessecms', __DIR__) . '/';
     }
 
     public function loaderSystem(): Loader
@@ -31,13 +31,13 @@ class BoostrapCli extends Cli
 
         $loader = new Loader();
         $loader->registerDirs([
-            $this->vitessecmsCoreDir.'core/helpers/',
-            $this->vitessecmsCoreDir.'core/Utils/'
+            $this->vitessecmsCoreDir . 'core/helpers/',
+            $this->vitessecmsCoreDir . 'core/Utils/'
         ])->register();
         $loader->registerNamespaces(
             [
-                'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir.'core/helpers/',
-                'VitesseCms\\Core\\Utils'   => $this->vitessecmsCoreDir.'core/Utils/',
+                'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir . 'core/helpers/',
+                'VitesseCms\\Core\\Utils' => $this->vitessecmsCoreDir . 'core/Utils/',
             ]
         );
         $loader = BootstrapUtil::addModulesToLoader(
@@ -47,6 +47,11 @@ class BoostrapCli extends Cli
         );
 
         return $loader;
+    }
+
+    public function getConfiguration(): ConfigService
+    {
+        return $this->get('configuration');
     }
 
     public function loadConfig(): BoostrapCli
@@ -67,10 +72,5 @@ class BoostrapCli extends Cli
         $this->setShared('url', new UrlService(new Request()));
 
         return $this;
-    }
-
-    public function getConfiguration(): ConfigService
-    {
-        return $this->get('configuration');
     }
 }

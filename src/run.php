@@ -15,7 +15,7 @@ require __DIR__ . '/../../core/src/Services/UrlService.php';
 require 'BoostrapCli.php';
 
 if (count($argv) < 4) {
-    echo 'A argument is missing'.PHP_EOL;
+    echo 'A argument is missing' . PHP_EOL;
     die();
 }
 
@@ -32,12 +32,12 @@ $console->setDI($di);
 try {
     $console->handle(CliUtil::buildArguments($argv));
 } catch (\Phalcon\Exception $e) {
-    fwrite(STDERR, $e->getMessage().PHP_EOL);
+    fwrite(STDERR, $e->getMessage() . PHP_EOL);
     exit(1);
 } catch (\Throwable $throwable) {
-    fwrite(STDERR, $throwable->getMessage().PHP_EOL);
+    fwrite(STDERR, $throwable->getMessage() . PHP_EOL);
     exit(1);
 } catch (Exception $exception) {
-    fwrite(STDERR, $exception->getMessage().PHP_EOL);
+    fwrite(STDERR, $exception->getMessage() . PHP_EOL);
     exit(1);
 }
