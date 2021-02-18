@@ -3,8 +3,8 @@
 namespace VitesseCms\Cli;
 
 use Exception;
-use VitesseCms\Cli\Utils\CliUtil;
 use Phalcon\Cli\Console as ConsoleApp;
+use VitesseCms\Cli\Utils\CliUtil;
 
 require __DIR__ . '/../../../autoload.php';
 require __DIR__ . '/../../configuration/src/Utils/DomainConfigUtil.php';

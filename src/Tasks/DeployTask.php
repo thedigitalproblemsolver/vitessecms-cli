@@ -2,15 +2,15 @@
 
 namespace VitesseCms\Cli\Tasks;
 
+use Phalcon\Cli\Task;
+use Phalcon\Config\Adapter\Json;
+use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Formatter\Crunched;
 use VitesseCms\Cli\Models\Mapping;
 use VitesseCms\Cli\Models\MappingIterator;
 use VitesseCms\Core\Interfaces\InjectableInterface;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
-use Phalcon\Cli\Task;
-use Phalcon\Config\Adapter\Json;
-use ScssPhp\ScssPhp\Compiler;
-use ScssPhp\ScssPhp\Formatter\Crunched;
 
 class DeployTask extends Task
 {

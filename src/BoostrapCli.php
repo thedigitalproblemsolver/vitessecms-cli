@@ -2,16 +2,15 @@
 
 namespace VitesseCms\Cli;
 
+use Phalcon\Di\FactoryDefault\Cli;
+use Phalcon\http\Request;
+use Phalcon\Loader;
+use VitesseCms\Configuration\Utils\AccountConfigUtil;
+use VitesseCms\Configuration\Utils\DomainConfigUtil;
 use VitesseCms\Core\Services\ConfigService;
 use VitesseCms\Core\Services\UrlService;
-use VitesseCms\Configuration\Utils\AccountConfigUtil;
 use VitesseCms\Core\Utils\BootstrapUtil;
-use VitesseCms\Core\Utils\DirectoryUtil;
-use VitesseCms\Configuration\Utils\DomainConfigUtil;
 use VitesseCms\Core\Utils\SystemUtil;
-use Phalcon\Di\FactoryDefault\Cli;
-use Phalcon\Loader;
-use Phalcon\http\Request;
 
 class BoostrapCli extends Cli
 {
