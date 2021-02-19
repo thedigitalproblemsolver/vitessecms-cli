@@ -2,16 +2,15 @@
 
 namespace VitesseCms\Cli;
 
+use Phalcon\Di\FactoryDefault\Cli;
+use Phalcon\http\Request;
+use Phalcon\Loader;
+use VitesseCms\Configuration\Utils\AccountConfigUtil;
+use VitesseCms\Configuration\Utils\DomainConfigUtil;
 use VitesseCms\Core\Services\ConfigService;
 use VitesseCms\Core\Services\UrlService;
-use VitesseCms\Configuration\Utils\AccountConfigUtil;
 use VitesseCms\Core\Utils\BootstrapUtil;
-use VitesseCms\Core\Utils\DirectoryUtil;
-use VitesseCms\Configuration\Utils\DomainConfigUtil;
 use VitesseCms\Core\Utils\SystemUtil;
-use Phalcon\Di\FactoryDefault\Cli;
-use Phalcon\Loader;
-use Phalcon\http\Request;
 
 class BoostrapCli extends Cli
 {
@@ -24,7 +23,7 @@ class BoostrapCli extends Cli
     {
         parent::__construct();
 
-        $this->vitessecmsCoreDir = str_replace('cli', 'vitessecms', __DIR__).'/';
+        $this->vitessecmsCoreDir = str_replace('cli', 'vitessecms', __DIR__) . '/';
     }
 
     public function loaderSystem(): Loader
@@ -32,13 +31,13 @@ class BoostrapCli extends Cli
 
         $loader = new Loader();
         $loader->registerDirs([
-            $this->vitessecmsCoreDir.'core/helpers/',
-            $this->vitessecmsCoreDir.'core/utils/'
+            $this->vitessecmsCoreDir . 'core/helpers/',
+            $this->vitessecmsCoreDir . 'core/Utils/'
         ])->register();
         $loader->registerNamespaces(
             [
-                'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir.'core/helpers/',
-                'VitesseCms\\Core\\Utils'   => $this->vitessecmsCoreDir.'core/utils/',
+                'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir . 'core/helpers/',
+                'VitesseCms\\Core\\Utils' => $this->vitessecmsCoreDir . 'core/Utils/',
             ]
         );
         $loader = BootstrapUtil::addModulesToLoader(
@@ -48,6 +47,11 @@ class BoostrapCli extends Cli
         );
 
         return $loader;
+    }
+
+    public function getConfiguration(): ConfigService
+    {
+        return $this->get('configuration');
     }
 
     public function loadConfig(): BoostrapCli
@@ -68,10 +72,5 @@ class BoostrapCli extends Cli
         $this->setShared('url', new UrlService(new Request()));
 
         return $this;
-    }
-
-    public function getConfiguration(): ConfigService
-    {
-        return $this->get('configuration');
     }
 }
