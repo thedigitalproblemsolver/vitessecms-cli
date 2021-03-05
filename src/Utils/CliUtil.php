@@ -19,6 +19,9 @@ class CliUtil
                 case 3:
                     $arguments['domain'] = $arg;
                     break;
+                case 4:
+                    $arguments['account'] = $arg;
+                    break;
             endswitch;
         }
 

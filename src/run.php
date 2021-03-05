@@ -12,7 +12,8 @@ require __DIR__ . '/../../core/src/Utils/DebugUtil.php';
 require __DIR__ . '/../../configuration/src/Utils/AccountConfigUtil.php';
 require __DIR__ . '/../../configuration/src/Services/ConfigService.php';
 require __DIR__ . '/../../core/src/Services/UrlService.php';
-require 'BoostrapCli.php';
+require __DIR__ . '/Utils/CliUtil.php';
+require __DIR__ . '/BootstrapCli.php';
 
 if (count($argv) < 4) {
     echo 'A argument is missing' . PHP_EOL;
@@ -21,10 +22,14 @@ if (count($argv) < 4) {
 
 $_SERVER['HTTP_HOST'] = $argv[3];
 
-$di = new BoostrapCli();
+$di = new BootstrapCli();
 $di->setUrl();
-$di->loadConfig();
-$di->loaderSystem();
+if($argv[1] !== 'install' && $argv[2] !== 'create' ) :
+    $di->loadConfig();
+    $di->loaderSystem();
+else :
+    require __DIR__ . '/Tasks/DomainTask.php';
+endif;
 
 $console = new ConsoleApp();
 $console->setDI($di);
