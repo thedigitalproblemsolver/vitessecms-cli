@@ -12,7 +12,7 @@ use VitesseCms\Core\Services\UrlService;
 use VitesseCms\Core\Utils\BootstrapUtil;
 use VitesseCms\Core\Utils\SystemUtil;
 
-class BoostrapCli extends Cli
+class BootstrapCli extends Cli
 {
     /**
      * @var string
@@ -23,23 +23,24 @@ class BoostrapCli extends Cli
     {
         parent::__construct();
 
-        $this->vitessecmsCoreDir = str_replace('cli', 'vitessecms', __DIR__) . '/';
+        $this->vitessecmsCoreDir = str_replace('cli', 'core', __DIR__) . '/';
     }
 
     public function loaderSystem(): Loader
     {
-
         $loader = new Loader();
         $loader->registerDirs([
-            $this->vitessecmsCoreDir . 'core/helpers/',
-            $this->vitessecmsCoreDir . 'core/Utils/'
+            $this->vitessecmsCoreDir . 'Helpers/',
+            $this->vitessecmsCoreDir . 'Utils/'
         ])->register();
+
         $loader->registerNamespaces(
             [
-                'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir . 'core/helpers/',
-                'VitesseCms\\Core\\Utils' => $this->vitessecmsCoreDir . 'core/Utils/',
+                'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir . 'Helpers/',
+                'VitesseCms\\Core\\Utils' => $this->vitessecmsCoreDir . 'Utils/',
             ]
         );
+
         $loader = BootstrapUtil::addModulesToLoader(
             $loader,
             SystemUtil::getModules($this->getConfiguration()),
@@ -54,9 +55,9 @@ class BoostrapCli extends Cli
         return $this->get('configuration');
     }
 
-    public function loadConfig(): BoostrapCli
+    public function loadConfig(): BootstrapCli
     {
-        $domainConfig = new DomainConfigUtil();
+        $domainConfig = new DomainConfigUtil(__DIR__ . '/../../../../');
         $domainConfig->merge(new AccountConfigUtil($domainConfig->get('account')));
         $domainConfig->setDirectories();
         $domainConfig->setTemplate();
@@ -67,7 +68,7 @@ class BoostrapCli extends Cli
         return $this;
     }
 
-    public function setUrl(): BoostrapCli
+    public function setUrl(): BootstrapCli
     {
         $this->setShared('url', new UrlService(new Request()));
 
