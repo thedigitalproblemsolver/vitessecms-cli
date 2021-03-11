@@ -34,8 +34,8 @@ class DomainTask extends Task
             $content = 'account = '.$params['account'].'
             
 [language]
-locale=nl-NL
-short=nl
+locale=en-EN
+short=en
             ';
             file_put_contents($domainConfigIni, $content);
         endif;
@@ -47,7 +47,7 @@ short=nl
 upload = '.$params['account'].'
 https = true
 ecommerce = false
-languageShortDefault = nl
+languageShortDefault = en
 
 [mongo]
 database = '.$params['account'].'
