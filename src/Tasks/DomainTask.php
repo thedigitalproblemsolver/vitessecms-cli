@@ -6,8 +6,8 @@ use Phalcon\Cli\Task;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
 
-require __DIR__ . '/../../../core/src/Utils/DirectoryUtil.php';
-require __DIR__ . '/../../../core/src/Utils/FileUtil.php';
+require_once __DIR__ . '/../../../core/src/Utils/DirectoryUtil.php';
+require_once __DIR__ . '/../../../core/src/Utils/FileUtil.php';
 
 class DomainTask extends Task
 {
