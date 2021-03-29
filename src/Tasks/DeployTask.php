@@ -60,7 +60,7 @@ class DeployTask extends Task
         $this->vendorDir = __DIR__ . '/../../../../';
         $this->accountDir = $this->getDI()->getConfiguration()->getAccountDir();
         $this->assetsDir = $this->getDI()->getConfiguration()->getAssetsDir();
-        $this->vitesseCmsSrcDir = $this->vendorDir . '/vitessecms/vitessecms/src/';
+        $this->vitesseCmsSrcDir = $this->vendorDir . 'vitessecms/';
     }
 
     public function assetsAction(): void
@@ -114,7 +114,7 @@ class DeployTask extends Task
                 $this->publicHtmlDir . 'assets/default/js/'
             ),
             new Mapping(
-                $this->vitesseCmsSrcDir . 'core/Resources/js/*',
+                $this->vitesseCmsSrcDir . 'core/src/Resources/js/*',
                 $this->publicHtmlDir . 'assets/default/js/'
             ),
             new Mapping(
@@ -201,10 +201,10 @@ class DeployTask extends Task
     protected function buildAdminCss(): void
     {
         $scssCompiler = new Compiler();
-        $scssCompiler->addImportPath($this->vitesseCmsSrcDir . 'core/scss/');
+        $scssCompiler->addImportPath($this->vitesseCmsSrcDir . 'core/src/scss/');
         $scssCompiler->setFormatter(Crunched::class);
         $scssCompiled = $scssCompiler->compile(
-            file_get_contents($this->vitesseCmsSrcDir . 'core/scss/admin.scss')
+            file_get_contents($this->vitesseCmsSrcDir . 'core/src/scss/admin.scss')
         );
 
         file_put_contents($this->coreAssetsDir . 'css/admin.css', $scssCompiled);
