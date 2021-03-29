@@ -21,12 +21,12 @@ class DomainTask extends Task
 
     public function createAction(array $params): void
     {
+        $scssDir = $this->rootDir . 'config/account/' . $params['account'].'/scss';
+
         DirectoryUtil::exists($this->rootDir . 'config/domain/' . $params['domain'], true);
-        DirectoryUtil::exists($this->rootDir . 'config/account/' . $params['account'], true);
-        DirectoryUtil::exists($this->rootDir . 'public_html/uploads/'.$params['account'], true);
-        DirectoryUtil::exists($this->rootDir . 'public_html/assets/'.$params['account'], true);
-        DirectoryUtil::exists($this->rootDir . 'public_html/assets/'.$params['account'].'/js', true);
-        DirectoryUtil::exists($this->rootDir . 'public_html/assets/'.$params['account'].'/css', true);
+        DirectoryUtil::exists($scssDir, true);
+        DirectoryUtil::exists($this->rootDir . 'public_html/assets/'.$params['account'].'/js/cache', true);
+        DirectoryUtil::exists($this->rootDir . 'public_html/assets/'.$params['account'].'/css/cache', true);
 
         $domainConfigIni = $this->rootDir . 'config/domain/' . $params['domain'].'/config.ini';
         if(!FileUtil::exists($domainConfigIni)) :
@@ -61,5 +61,33 @@ port = 11300
             ';
             file_put_contents($accountConfigIni, $content);
         endif;
+
+        $accountConfigDevIni = $this->rootDir . 'config/account/' . $params['account'].'/config_dev.ini';
+        if(!FileUtil::exists($accountConfigDevIni)) :
+            FileUtil::exists($accountConfigIni, true);
+            $content = 'template = core
+upload = '.$params['account'].'
+https = false
+ecommerce = false
+languageShortDefault = en
+
+[mongo]
+database = '.$params['account'].'
+ip = 192.167.0.22
+
+[elasticsearch]
+host = 192.167.0.55
+
+[beanstalk]
+host = 192.167.0.44
+port = 11300
+            ';
+            file_put_contents($accountConfigDevIni, $content);
+        endif;
+
+        DirectoryUtil::copy(
+            $this->rootDir.'vendor/vitessecms/install/src/Resources/files/scss',
+            $scssDir
+        );
     }
 }
