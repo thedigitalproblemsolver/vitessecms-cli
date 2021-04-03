@@ -5,11 +5,12 @@ namespace VitesseCms\Cli;
 use Phalcon\Di\FactoryDefault\Cli;
 use Phalcon\http\Request;
 use Phalcon\Loader;
+use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
 use VitesseCms\Configuration\Utils\DomainConfigUtil;
-use VitesseCms\Core\Services\ConfigService;
 use VitesseCms\Core\Services\UrlService;
 use VitesseCms\Core\Utils\BootstrapUtil;
+use VitesseCms\Core\Utils\DebugUtil;
 use VitesseCms\Core\Utils\SystemUtil;
 
 class BootstrapCli extends Cli
@@ -58,7 +59,13 @@ class BootstrapCli extends Cli
     public function loadConfig(): BootstrapCli
     {
         $domainConfig = new DomainConfigUtil(__DIR__ . '/../../../../');
-        $domainConfig->merge(new AccountConfigUtil($domainConfig->get('account')));
+
+        $file = 'config.ini';
+        if (DebugUtil::isDocker($_SERVER['SERVER_ADDR'] ?? '')) :
+            $file = 'config_dev.ini';
+        endif;
+        $accountConfigFile = __DIR__ . '/../../../../config/account/' . $domainConfig->get('account') . '/' . $file;
+        $domainConfig->merge(new AccountConfigUtil($accountConfigFile));
         $domainConfig->setDirectories();
         $domainConfig->setTemplate();
 

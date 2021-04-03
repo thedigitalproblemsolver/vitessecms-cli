@@ -29,6 +29,7 @@ if($argv[1] !== 'install' && $argv[2] !== 'create' ) :
     $di->loaderSystem();
 else :
     require __DIR__ . '/Tasks/DomainTask.php';
+    require __DIR__ . '/Tasks/InstallTask.php';
 endif;
 
 $console = new ConsoleApp();
