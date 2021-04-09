@@ -1,11 +1,11 @@
 {
   "name": "vitessecms/cli",
   "type": "library",
-  "description": "Block module for VitesseCms",
+  "description": "Cli module for VitesseCms",
   "keywords": ["php","phalcon","vitessecms"],
   "homepage": "https://github.com/thedigitalproblemsolver/VitesseCMS",
   "license": "GPL-2.0-or-later",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "authors": [
     {
       "name": "Jasper Jaklofsky",
@@ -20,6 +20,8 @@
   "require": {
     "vitessecms/configuration": "~0.0.9",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.0.10"
+    "vitessecms/core": "~0.0.10",
+    "vitessecms/user": "~0.0.8",
+    "ext-zlib": "*"
   }
 }

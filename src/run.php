@@ -21,14 +21,17 @@ if (count($argv) < 4) {
 }
 
 $_SERVER['HTTP_HOST'] = $argv[3];
+$_SERVER['SERVER_ADDR'] = '192.167.0.33';
 
 $di = new BootstrapCli();
 $di->setUrl();
 if($argv[1] !== 'install' && $argv[2] !== 'create' ) :
     $di->loadConfig();
     $di->loaderSystem();
-else :
+elseif($argv[1] === 'domain' && $argv[2] === 'create') :
+    $di->loadConfig();
     require __DIR__ . '/Tasks/DomainTask.php';
+else :
     require __DIR__ . '/Tasks/InstallTask.php';
 endif;
 
