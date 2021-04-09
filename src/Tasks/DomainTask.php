@@ -5,6 +5,7 @@ namespace VitesseCms\Cli\Tasks;
 use Phalcon\Cli\Task;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
+use VitesseCms\User\Utils\PermissionUtils;
 
 require_once __DIR__ . '/../../../core/src/Utils/DirectoryUtil.php';
 require_once __DIR__ . '/../../../core/src/Utils/FileUtil.php';
@@ -89,5 +90,15 @@ port = 11300
             $this->rootDir.'vendor/vitessecms/install/src/Resources/files/scss',
             $scssDir
         );
+
+        $permissionsFile = PermissionUtils::getAccessFileName();
+        if(!FileUtil::exists($permissionsFile)) :
+            $hash = gzdeflate(
+                base64_encode(
+                    serialize(PermissionUtils::getDefaults())
+                )
+            );
+            file_put_contents(PermissionUtils::getAccessFileName(), $hash);
+        endif;
     }
 }
