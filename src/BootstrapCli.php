@@ -61,7 +61,7 @@ class BootstrapCli extends Cli
         $domainConfig = new DomainConfigUtil(__DIR__ . '/../../../../');
 
         $file = 'config.ini';
-        if (DebugUtil::isDocker($_SERVER['SERVER_ADDR'] ?? '')) :
+        if (DebugUtil::isDev()) :
             $file = 'config_dev.ini';
         endif;
         $accountConfigFile = __DIR__ . '/../../../../config/account/' . $domainConfig->get('account') . '/' . $file;
