@@ -22,6 +22,7 @@
     "scssphp/scssphp": "^1.1",
     "vitessecms/core": "~0.0.10",
     "vitessecms/user": "~0.0.8",
+    "phalcon/devtools": "^3.4",
     "ext-zlib": "*"
   }
 }
