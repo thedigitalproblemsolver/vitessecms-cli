@@ -6,6 +6,7 @@ use Phalcon\Cli\Task;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Datagroup\Repositories\DatagroupRepository;
 use VitesseCms\Install\Repositories\MigrationCollection;
+use VitesseCms\Install\Repositories\MigrationRepository;
 use VitesseCms\Install\Utils\MigrationUtil;
 
 class MigrationTask extends Task
@@ -15,7 +16,8 @@ class MigrationTask extends Task
         MigrationUtil::executeUp(
             $this->getDI()->getConfiguration(),
             new MigrationCollection(
-                new DatagroupRepository()
+                new DatagroupRepository(),
+                new MigrationRepository()
             )
         );
     }
