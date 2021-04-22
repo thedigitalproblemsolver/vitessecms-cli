@@ -19,6 +19,9 @@
   },
   "require": {
     "vitessecms/configuration": "~0.0.9",
+    "vitessecms/datagroup": "~0.0.5",
+    "vitessecms/datafield": "~0.0.9",
+    "vitessecms/block": "~0.0.16",
     "scssphp/scssphp": "^1.1",
     "vitessecms/core": "~0.0.10",
     "vitessecms/user": "~0.0.8",
