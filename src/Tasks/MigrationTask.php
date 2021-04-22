@@ -3,6 +3,7 @@
 namespace VitesseCms\Cli\Tasks;
 
 use Phalcon\Cli\Task;
+use VitesseCms\Block\Repositories\BlockRepository;
 use VitesseCms\Cli\Services\TerminalService;
 use VitesseCms\Datagroup\Repositories\DatagroupRepository;
 use VitesseCms\Install\Repositories\MigrationCollection;
@@ -26,6 +27,7 @@ class MigrationTask extends Task
             new MigrationCollection(
                 new DatagroupRepository(),
                 new MigrationRepository(),
+                new BlockRepository()
             ),
             new TerminalService()
         ));
