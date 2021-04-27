@@ -7,9 +7,6 @@ use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
 use VitesseCms\User\Utils\PermissionUtils;
 
-require_once __DIR__ . '/../../../core/src/Utils/DirectoryUtil.php';
-require_once __DIR__ . '/../../../core/src/Utils/FileUtil.php';
-
 class DomainTask extends Task
 {
     /** @var String */

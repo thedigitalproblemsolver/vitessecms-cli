@@ -2,7 +2,9 @@
 
 namespace VitesseCms\Cli\Models;
 
-class MappingIterator extends \ArrayIterator
+use ArrayIterator;
+
+class MappingIterator extends ArrayIterator
 {
     public function __construct(array $mappings)
     {

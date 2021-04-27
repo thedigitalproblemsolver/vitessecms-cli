@@ -2,9 +2,11 @@
 
 namespace VitesseCms\Cli;
 
+use MongoDB\Client;
 use Phalcon\Di\FactoryDefault\Cli;
 use Phalcon\http\Request;
 use Phalcon\Loader;
+use Phalcon\Mvc\Collection\Manager as CollectionManager;
 use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
 use VitesseCms\Configuration\Utils\DomainConfigUtil;
@@ -78,6 +80,20 @@ class BootstrapCli extends Cli
     public function setUrl(): BootstrapCli
     {
         $this->setShared('url', new UrlService(new Request()));
+
+        return $this;
+    }
+
+    public function database(): BootstrapCli
+    {
+        $configuration = $this->getConfiguration();
+
+        $this->setShared(
+            'mongo',
+            (new Client($configuration->getMongoUri()))
+                ->selectDatabase($configuration->getMongoDatabase())
+        );
+        $this->setShared('collectionManager', new CollectionManager());
 
         return $this;
     }
