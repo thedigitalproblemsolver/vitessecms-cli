@@ -5,8 +5,6 @@ namespace VitesseCms\Cli\Tasks;
 use Phalcon\Cli\Task;
 use VitesseCms\Core\Utils\DirectoryUtil;
 
-require_once __DIR__ . '/../../../core/src/Utils/DirectoryUtil.php';
-
 class InstallTask extends Task
 {
     /** @var String */

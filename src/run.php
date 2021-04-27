@@ -4,16 +4,20 @@ namespace VitesseCms\Cli;
 
 use Exception;
 use Phalcon\Cli\Console as ConsoleApp;
+use Throwable;
 use VitesseCms\Cli\Utils\CliUtil;
 
-require __DIR__ . '/../../../autoload.php';
-require __DIR__ . '/../../configuration/src/Utils/DomainConfigUtil.php';
-require __DIR__ . '/../../core/src/Utils/DebugUtil.php';
-require __DIR__ . '/../../configuration/src/Utils/AccountConfigUtil.php';
-require __DIR__ . '/../../configuration/src/Services/ConfigService.php';
-require __DIR__ . '/../../core/src/Services/UrlService.php';
-require __DIR__ . '/Utils/CliUtil.php';
-require __DIR__ . '/BootstrapCli.php';
+require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__ . '/../../configuration/src/Utils/DomainConfigUtil.php';
+require_once __DIR__ . '/../../core/src/Utils/DirectoryUtil.php';
+require_once __DIR__ . '/../../core/src/Utils/FileUtil.php';
+require_once __DIR__ . '/../../core/src/Utils/DebugUtil.php';
+require_once __DIR__ . '/../../configuration/src/Utils/AccountConfigUtil.php';
+require_once __DIR__ . '/../../configuration/src/Services/ConfigServiceInterface.php';
+require_once __DIR__ . '/../../configuration/src/Services/ConfigService.php';
+require_once __DIR__ . '/../../core/src/Services/UrlService.php';
+require_once __DIR__ . '/Utils/CliUtil.php';
+require_once __DIR__ . '/BootstrapCli.php';
 
 if (count($argv) < 4) {
     echo 'A argument is missing' . PHP_EOL;
@@ -28,6 +32,7 @@ $di->setUrl();
 if($argv[1] !== 'install' && $argv[2] !== 'create' ) :
     $di->loadConfig();
     $di->loaderSystem();
+    $di->database();
 elseif($argv[1] === 'domain' && $argv[2] === 'create') :
     $di->loadConfig();
     require __DIR__ . '/Tasks/DomainTask.php';
@@ -43,7 +48,7 @@ try {
 } catch (\Phalcon\Exception $e) {
     fwrite(STDERR, $e->getMessage() . PHP_EOL);
     exit(1);
-} catch (\Throwable $throwable) {
+} catch (Throwable $throwable) {
     fwrite(STDERR, $throwable->getMessage() . PHP_EOL);
     exit(1);
 } catch (Exception $exception) {
