@@ -24,7 +24,7 @@
     "vitessecms/block": "~0.0.19",
     "vitessecms/install": "~0.0.15",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.0.18",
+    "vitessecms/core": "~0.0.19",
     "vitessecms/user": "~0.0.8",
     "phalcon/devtools": "^3.4",
     "ext-zlib": "*"
