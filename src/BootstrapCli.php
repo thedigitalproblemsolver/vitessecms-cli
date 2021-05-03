@@ -3,17 +3,25 @@
 namespace VitesseCms\Cli;
 
 use MongoDB\Client;
+use Phalcon\Mvc\Router;
 use Phalcon\Di\FactoryDefault\Cli;
 use Phalcon\http\Request;
 use Phalcon\Loader;
 use Phalcon\Mvc\Collection\Manager as CollectionManager;
+use VitesseCms\Cli\Utils\RouterUtil;
 use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
 use VitesseCms\Configuration\Utils\DomainConfigUtil;
 use VitesseCms\Core\Services\UrlService;
+use VitesseCms\Core\Services\ViewService;
 use VitesseCms\Core\Utils\BootstrapUtil;
 use VitesseCms\Core\Utils\DebugUtil;
 use VitesseCms\Core\Utils\SystemUtil;
+use VitesseCms\Mustache\Engine;
+use VitesseCms\Mustache\Loader_FilesystemLoader;
+use VitesseCms\Mustache\MustacheEngine;
+use VitesseCms\User\Factories\UserFactory;
+use VitesseCms\User\Models\User;
 
 class BootstrapCli extends Cli
 {
@@ -94,6 +102,30 @@ class BootstrapCli extends Cli
                 ->selectDatabase($configuration->getMongoDatabase())
         );
         $this->setShared('collectionManager', new CollectionManager());
+
+        return $this;
+    }
+
+    public function view(): BootstrapCli
+    {
+        $this->setShared('view', function (): ViewService {
+            $view = new ViewService($this->getConfiguration());
+            $view->setViewsDir($this->getConfiguration()->getTemplateDir() . 'views/');
+            $view->setPartialsDir($this->getConfiguration()->getTemplateDir() . 'views/partials/');
+            $view->registerEngines(
+                [
+                    '.mustache' => function (ViewService $view): MustacheEngine {
+                        return new MustacheEngine(
+                            $view,
+                            new Engine(['partials_loader' => new Loader_FilesystemLoader($this->getConfiguration()->getCoreTemplateDir() . 'views/partials/')]),
+                            null
+                        );
+                    },
+                ]
+            );
+
+            return $view;
+        });
 
         return $this;
     }
