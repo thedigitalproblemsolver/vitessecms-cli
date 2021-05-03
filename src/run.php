@@ -33,6 +33,7 @@ if($argv[1] !== 'install' && $argv[2] !== 'create' ) :
     $di->loadConfig();
     $di->loaderSystem();
     $di->database();
+    $di->view();
 elseif($argv[1] === 'domain' && $argv[2] === 'create') :
     $di->loadConfig();
     require __DIR__ . '/Tasks/DomainTask.php';
