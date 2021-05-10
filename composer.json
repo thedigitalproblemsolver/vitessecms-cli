@@ -21,7 +21,7 @@
     "vitessecms/configuration": "~0.0.13",
     "vitessecms/datagroup": "~0.0.5",
     "vitessecms/datafield": "~0.0.9",
-    "vitessecms/block": "~0.0.19",
+    "vitessecms/block": "~0.0.20",
     "vitessecms/install": "~0.0.15",
     "scssphp/scssphp": "^1.1",
     "vitessecms/core": "~0.0.19",
