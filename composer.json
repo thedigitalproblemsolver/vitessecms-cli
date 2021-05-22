@@ -19,12 +19,12 @@
   },
   "require": {
     "vitessecms/configuration": "~0.1.0",
-    "vitessecms/datagroup": "~0.1.1",
-    "vitessecms/datafield": "~0.1.1",
-    "vitessecms/block": "~0.1.2",
+    "vitessecms/datagroup": "~0.1.2",
+    "vitessecms/datafield": "~0.1.2",
+    "vitessecms/block": "~0.1.3",
     "vitessecms/install": "~0.1.2",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.1.2",
+    "vitessecms/core": "~0.1.7",
     "vitessecms/user": "~0.1.0",
     "phalcon/devtools": "^3.4",
     "ext-zlib": "*"
