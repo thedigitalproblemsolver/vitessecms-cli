@@ -18,27 +18,30 @@ class MigrationTask extends Task
     {
         $terminalService = new TerminalService();
         $modules = SystemUtil::getModules($this->getDI()->getConfiguration());
+        $files = [];
         foreach ($modules as $module => $modulePath):
-            $files = DirectoryUtil::getFilelist($modulePath.'/Migrations');
-            $module = ucfirst($module);
-            foreach ($files as $filePath => $fileName):
-                $name = str_replace(
-                    $this->getDI()->getConfiguration()->getRootDir().'../',
-                    '',
-                    $filePath
-                );
-                if ((new MigrationRepository())->findFirst(new FindValueIterator([new FindValue('name', $name)])) === null):
-                    $terminalService->printHeader('Started ' . $name);
-                    require_once $filePath;
-                    /** @var MigrationInterface $className */
-                    $className = 'VitesseCms\\'.$module.'\\Migrations\\' . str_replace('.php','',$fileName);
-                    $result = (new $className())->up($this->getDI()->getConfiguration(), $terminalService);
-                    if ($result):
-                        (new Migration())->setName($name)->setPublished(true)->save();
-                    endif;
-                    $terminalService->printHeader('Finished ' . $name);
+            $files = array_merge($files, DirectoryUtil::getFilelist($modulePath.'/Migrations'));
+        endforeach;
+        $files = array_flip($files);
+        ksort($files);
+
+        foreach ($files as $fileName => $filePath):
+            $name = str_replace(
+                $this->getDI()->getConfiguration()->getRootDir().'../',
+                '',
+                $filePath
+            );
+            if ((new MigrationRepository())->findFirst(new FindValueIterator([new FindValue('name', $name)])) === null):
+                $terminalService->printHeader('Started ' . $name);
+                require_once $filePath;
+                /** @var MigrationInterface $className */
+                $className = SystemUtil::createNamespaceFromPath($filePath);
+                $result = (new $className())->up($this->getDI()->getConfiguration(), $terminalService);
+                if ($result):
+                    (new Migration())->setName($name)->setPublished(true)->save();
                 endif;
-            endforeach;
+                $terminalService->printHeader('Finished ' . $name);
+            endif;
         endforeach;
     }
 
