@@ -3,6 +3,7 @@
 namespace VitesseCms\Cli\Tasks;
 
 use Phalcon\Cli\Task;
+use Phalcon\Di;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
 use VitesseCms\User\Utils\PermissionUtils;
@@ -88,6 +89,7 @@ port = 11300
             $scssDir
         );
 
+        Di::getDefault()->loadConfig();
         $permissionsFile = PermissionUtils::getAccessFileName();
         if(!FileUtil::exists($permissionsFile)) :
             $hash = gzdeflate(
