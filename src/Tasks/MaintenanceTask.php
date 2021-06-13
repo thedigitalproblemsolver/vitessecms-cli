@@ -3,13 +3,13 @@
 namespace VitesseCms\Cli\Tasks;
 
 use Phalcon\Cli\Task;
-use VitesseCms\Admin\Repositories\DatagroupRepository;
 use VitesseCms\Content\Models\Item;
 use VitesseCms\Content\Repositories\ItemRepository;
 use VitesseCms\Content\Utils\SeoUtil;
 use VitesseCms\Database\Models\FindValue;
 use VitesseCms\Database\Models\FindValueIterator;
 use VitesseCms\Datafield\Repositories\DatafieldRepository;
+use VitesseCms\Datagroup\Repositories\DatagroupRepository;
 use VitesseCms\Language\Repositories\LanguageRepository;
 
 class MaintenanceTask extends Task
