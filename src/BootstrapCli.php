@@ -3,11 +3,13 @@
 namespace VitesseCms\Cli;
 
 use MongoDB\Client;
+use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Router;
 use Phalcon\Di\FactoryDefault\Cli;
 use Phalcon\http\Request;
 use Phalcon\Loader;
 use Phalcon\Mvc\Collection\Manager as CollectionManager;
+use Phalcon\Mvc\View;
 use VitesseCms\Cli\Utils\RouterUtil;
 use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
@@ -109,10 +111,16 @@ class BootstrapCli extends Cli
     public function view(): BootstrapCli
     {
         $this->setShared('view', function (): ViewService {
-            $view = new ViewService($this->getConfiguration());
-            $view->setViewsDir($this->getConfiguration()->getTemplateDir() . 'views/');
-            $view->setPartialsDir($this->getConfiguration()->getTemplateDir() . 'views/partials/');
-            $view->registerEngines(
+            $view = new View();
+            $view->setDI(new FactoryDefault());
+            $viewService = new ViewService(
+                $this->getConfiguration()->getCoreTemplateDir(),
+                $this->getConfiguration()->getVendorNameDir(),
+                $view
+            );
+            $viewService->setViewsDir($this->getConfiguration()->getTemplateDir() . 'views/');
+            $viewService->setPartialsDir($this->getConfiguration()->getTemplateDir() . 'views/partials/');
+            $viewService->registerEngines(
                 [
                     '.mustache' => function (ViewService $view): MustacheEngine {
                         return new MustacheEngine(
@@ -124,7 +132,7 @@ class BootstrapCli extends Cli
                 ]
             );
 
-            return $view;
+            return $viewService;
         });
 
         return $this;
