@@ -3,7 +3,6 @@
 namespace VitesseCms\Cli;
 
 use Exception;
-use Phalcon\Cli\Console as ConsoleApp;
 use Throwable;
 use VitesseCms\Cli\Utils\CliUtil;
 
@@ -18,6 +17,7 @@ require_once __DIR__ . '/../../configuration/src/Services/ConfigService.php';
 require_once __DIR__ . '/../../core/src/Services/UrlService.php';
 require_once __DIR__ . '/Utils/CliUtil.php';
 require_once __DIR__ . '/BootstrapCli.php';
+require_once __DIR__ . '/ConsoleApplication.php';
 
 if (count($argv) < 4) {
     echo 'A argument is missing' . PHP_EOL;
@@ -40,8 +40,9 @@ else :
     require __DIR__ . '/Tasks/InstallTask.php';
 endif;
 
-$console = new ConsoleApp();
+$console = new ConsoleApplication();
 $console->setDI($di);
+$console->attachListeners();
 
 try {
     $console->handle(CliUtil::buildArguments($argv));

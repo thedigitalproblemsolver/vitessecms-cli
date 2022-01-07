@@ -6,6 +6,7 @@ use Phalcon\Cli\Task;
 use Phalcon\Config\Adapter\Json;
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\Formatter\Crunched;
+use VitesseCms\Cli\DTO\MappingDTO;
 use VitesseCms\Cli\Models\Mapping;
 use VitesseCms\Cli\Models\MappingIterator;
 use VitesseCms\Core\Interfaces\InjectableInterface;
@@ -105,9 +106,11 @@ class DeployTask extends Task
         endif;
     }
 
+    /**
+     * @TODO move all module implementation to different packages
+     */
     protected function getJSMapping(): MappingIterator
     {
-        //TODO add to module walkthrough adn move to different packages
         $jsMapping = new MappingIterator([
             new Mapping(
                 $this->vendorDir . 'vitessecms/filemanager/src/Resources/js/*',
@@ -126,6 +129,9 @@ class DeployTask extends Task
                 $this->publicHtmlDir . 'assets/default/js/bootstrap-colorpicker.min.js'
             ),
         ]);
+
+        $dto = new MappingDTO( $jsMapping, $this->vendorDir, $this->publicHtmlDir);
+        $jsMapping = $this->eventsManager->fire('Deploy:JSMapping', $dto);
 
         if (!empty($this->accountMapping['javascript'])):
             foreach ($this->accountMapping['javascript'] as $image) :
@@ -174,6 +180,9 @@ class DeployTask extends Task
                 $this->coreAssetsDir . 'css/bootstrap-slider.min.css'
             ),
         ]);
+
+        $dto = new MappingDTO( $cssMapping, $this->vendorDir, $this->publicHtmlDir);
+        $cssMapping = $this->eventsManager->fire('Deploy:CssMapping', $dto);
 
         if (!empty($this->accountMapping['css'])):
             foreach ($this->accountMapping['css'] as $image) :
