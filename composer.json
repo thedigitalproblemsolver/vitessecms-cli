@@ -20,9 +20,9 @@
   "require": {
     "vitessecms/datagroup": "~0.2.10",
     "vitessecms/datafield": "~0.2.13",
-    "vitessecms/install": "~0.2.6",
+    "vitessecms/install": "~0.2.8",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.2.16",
+    "vitessecms/core": "~0.2.19",
     "vitessecms/user": "~0.2.5",
     "phalcon/devtools": "^3.4",
     "ext-zlib": "*"
