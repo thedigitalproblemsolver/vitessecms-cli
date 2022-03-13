@@ -22,7 +22,7 @@
     "vitessecms/datafield": "~0.2.13",
     "vitessecms/install": "~0.2.9",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.2.20",
+    "vitessecms/core": "~0.2.21",
     "vitessecms/user": "~0.2.6",
     "phalcon/devtools": "^3.4",
     "ext-zlib": "*"
