@@ -9,7 +9,7 @@ class ConsoleApplication extends ConsoleApp
 {
     public function attachListeners(): ConsoleApplication
     {
-        foreach (SystemUtil::getModules($this->configuration) as $path) :
+        foreach (SystemUtil::getModules($this->di->getConfiguration()) as $path) :
             $listenerPath = $path . '/Listeners/CliListeners.php';
             if (is_file($listenerPath)) :
                 SystemUtil::createNamespaceFromPath($listenerPath)::setListeners($this);

@@ -4,13 +4,11 @@ namespace VitesseCms\Cli;
 
 use MongoDB\Client;
 use Phalcon\Di\FactoryDefault;
-use Phalcon\Mvc\Router;
 use Phalcon\Di\FactoryDefault\Cli;
 use Phalcon\http\Request;
 use Phalcon\Loader;
 use Phalcon\Mvc\Collection\Manager as CollectionManager;
 use Phalcon\Mvc\View;
-use VitesseCms\Cli\Utils\RouterUtil;
 use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
 use VitesseCms\Configuration\Utils\DomainConfigUtil;
@@ -22,8 +20,6 @@ use VitesseCms\Core\Utils\SystemUtil;
 use VitesseCms\Mustache\Engine;
 use VitesseCms\Mustache\Loader_FilesystemLoader;
 use VitesseCms\Mustache\MustacheEngine;
-use VitesseCms\User\Factories\UserFactory;
-use VitesseCms\User\Models\User;
 
 class BootstrapCli extends Cli
 {
