@@ -5,6 +5,7 @@ namespace VitesseCms\Cli;
 use Exception;
 use Throwable;
 use VitesseCms\Cli\Utils\CliUtil;
+use VitesseCms\Core\Utils\DirectoryUtil;
 
 require_once __DIR__ . '/../../../autoload.php';
 require_once __DIR__ . '/../../configuration/src/Utils/DomainConfigUtil.php';
@@ -35,8 +36,18 @@ if($argv[1] !== 'install' && $argv[2] !== 'create' ) :
     $di->database();
     $di->view();
 elseif($argv[1] === 'domain' && $argv[2] === 'create') :
+    $di->loadConfig();
     require __DIR__ . '/Tasks/DomainTask.php';
 else :
+    DirectoryUtil::copy(
+        __DIR__.'/Resources/config/domain/example.com/',
+        __DIR__.'/../../../../config/domain/example.com/'
+    );
+    DirectoryUtil::copy(
+        __DIR__.'/Resources/config/account/example/',
+        __DIR__.'/../../../../config/account/example/'
+    );
+    $di->loadConfig();
     require __DIR__ . '/Tasks/InstallTask.php';
 endif;
 
