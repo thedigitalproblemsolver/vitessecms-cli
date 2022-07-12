@@ -18,7 +18,7 @@
     }
   },
   "require": {
-    "vitessecms/datagroup": "~0.2.10",
+    "vitessecms/datagroup": "~0.2.11",
     "vitessecms/datafield": "~0.2.13",
     "vitessecms/install": "~0.2.10",
     "scssphp/scssphp": "^1.1",
