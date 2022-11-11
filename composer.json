@@ -2,7 +2,11 @@
   "name": "vitessecms/cli",
   "type": "library",
   "description": "Cli module for VitesseCms",
-  "keywords": ["php","phalcon","vitessecms"],
+  "keywords": [
+    "php",
+    "phalcon",
+    "vitessecms"
+  ],
   "homepage": "https://github.com/thedigitalproblemsolver/VitesseCMS",
   "license": "GPL-2.0-or-later",
   "version": "0.2.6",
@@ -24,7 +28,6 @@
     "scssphp/scssphp": "^1.1",
     "vitessecms/core": "~0.2.24",
     "vitessecms/user": "~0.2.10",
-    "phalcon/devtools": "^3.4",
     "ext-zlib": "*"
   }
 }
