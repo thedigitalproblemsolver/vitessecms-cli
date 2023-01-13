@@ -3,7 +3,7 @@
 namespace VitesseCms\Cli\Tasks;
 
 use Phalcon\Cli\Task;
-use Phalcon\Di;
+use Phalcon\Di\Di;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
 use VitesseCms\User\Utils\PermissionUtils;
@@ -20,17 +20,17 @@ class DomainTask extends Task
 
     public function createAction(array $params): void
     {
-        $scssDir = $this->rootDir . 'config/account/' . $params['account'].'/scss';
+        $scssDir = $this->rootDir . 'config/account/' . $params['account'] . '/scss';
 
         DirectoryUtil::exists($this->rootDir . 'config/domain/' . $params['domain'], true);
         DirectoryUtil::exists($scssDir, true);
-        DirectoryUtil::exists($this->rootDir . 'public_html/assets/'.$params['account'].'/js/cache', true);
-        DirectoryUtil::exists($this->rootDir . 'public_html/assets/'.$params['account'].'/css/cache', true);
+        DirectoryUtil::exists($this->rootDir . 'public_html/assets/' . $params['account'] . '/js/cache', true);
+        DirectoryUtil::exists($this->rootDir . 'public_html/assets/' . $params['account'] . '/css/cache', true);
 
-        $domainConfigIni = $this->rootDir . 'config/domain/' . $params['domain'].'/config.ini';
-        if(!FileUtil::exists($domainConfigIni)) :
+        $domainConfigIni = $this->rootDir . 'config/domain/' . $params['domain'] . '/config.ini';
+        if (!FileUtil::exists($domainConfigIni)) :
             FileUtil::exists($domainConfigIni, true);
-            $content = 'account = '.$params['account'].'
+            $content = 'account = ' . $params['account'] . '
             
 [language]
 locale=en-EN
@@ -39,17 +39,17 @@ short=en
             file_put_contents($domainConfigIni, $content);
         endif;
 
-        $accountConfigIni = $this->rootDir . 'config/account/' . $params['account'].'/config.ini';
-        if(!FileUtil::exists($accountConfigIni)) :
+        $accountConfigIni = $this->rootDir . 'config/account/' . $params['account'] . '/config.ini';
+        if (!FileUtil::exists($accountConfigIni)) :
             FileUtil::exists($accountConfigIni, true);
             $content = 'template = core
-upload = '.$params['account'].'
+upload = ' . $params['account'] . '
 https = true
 ecommerce = false
 languageShortDefault = en
 
 [mongo]
-database = '.$params['account'].'
+database = ' . $params['account'] . '
 
 [elasticsearch]
 host = 127.0.0.1
@@ -61,17 +61,17 @@ port = 11300
             file_put_contents($accountConfigIni, $content);
         endif;
 
-        $accountConfigDevIni = $this->rootDir . 'config/account/' . $params['account'].'/config_dev.ini';
-        if(!FileUtil::exists($accountConfigDevIni)) :
+        $accountConfigDevIni = $this->rootDir . 'config/account/' . $params['account'] . '/config_dev.ini';
+        if (!FileUtil::exists($accountConfigDevIni)) :
             FileUtil::exists($accountConfigIni, true);
             $content = 'template = core
-upload = '.$params['account'].'
+upload = ' . $params['account'] . '
 https = false
 ecommerce = false
 languageShortDefault = en
 
 [mongo]
-database = '.$params['account'].'
+database = ' . $params['account'] . '
 ip = 192.167.0.22
 
 [elasticsearch]
@@ -85,13 +85,13 @@ port = 11300
         endif;
 
         DirectoryUtil::copy(
-            $this->rootDir.'vendor/vitessecms/install/src/Resources/files/scss',
+            $this->rootDir . 'vendor/vitessecms/install/src/Resources/files/scss',
             $scssDir
         );
 
         Di::getDefault()->loadConfig();
         $permissionsFile = PermissionUtils::getAccessFileName();
-        if(!FileUtil::exists($permissionsFile)) :
+        if (!FileUtil::exists($permissionsFile)) :
             $hash = gzdeflate(
                 base64_encode(
                     serialize(PermissionUtils::getDefaults())

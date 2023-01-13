@@ -6,8 +6,8 @@ use MongoDB\Client;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\FactoryDefault\Cli;
 use Phalcon\http\Request;
+use Phalcon\Incubator\MongoDB\Mvc\Collection\Manager as CollectionManager;
 use Phalcon\Loader;
-use Phalcon\Mvc\Collection\Manager as CollectionManager;
 use Phalcon\Mvc\View;
 use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
@@ -99,7 +99,7 @@ class BootstrapCli extends Cli
             (new Client($configuration->getMongoUri()))
                 ->selectDatabase($configuration->getMongoDatabase())
         );
-        $this->setShared('collectionManager', new CollectionManager());
+        $this->setShared('collectionsManager', new CollectionManager());
 
         return $this;
     }
