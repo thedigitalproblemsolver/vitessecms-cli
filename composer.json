@@ -23,10 +23,10 @@
   },
   "require": {
     "vitessecms/datagroup": "~0.4.0",
-    "vitessecms/datafield": "~0.3.1",
-    "vitessecms/install": "~0.3.1",
+    "vitessecms/datafield": "~0.3.2",
+    "vitessecms/install": "~0.3.3",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.4.2",
+    "vitessecms/core": "~0.4.4",
     "vitessecms/user": "~0.4.1",
     "ext-zlib": "*"
   }
