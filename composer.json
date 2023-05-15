@@ -26,8 +26,8 @@
     "vitessecms/datafield": "~0.3.4",
     "vitessecms/install": "~0.3.4",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "~0.5.0",
-    "vitessecms/user": "~0.5.0",
+    "vitessecms/core": "~0.5.1",
+    "vitessecms/user": "~0.5.1",
     "ext-zlib": "*"
   }
 }
