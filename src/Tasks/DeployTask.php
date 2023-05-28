@@ -9,51 +9,18 @@ use ScssPhp\ScssPhp\Formatter\Crunched;
 use VitesseCms\Cli\DTO\MappingDTO;
 use VitesseCms\Cli\Models\Mapping;
 use VitesseCms\Cli\Models\MappingIterator;
-use VitesseCms\Core\Interfaces\InjectableInterface;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
 
 class DeployTask extends Task
 {
-    /**
-     * @var array
-     */
-    protected $accountMapping;
-
-    /**
-     * @var InjectableInterface
-     */
-    protected $di;
-
-    /**
-     * @var string
-     */
-    protected $coreAssetsDir;
-
-    /**
-     * @var string
-     */
-    protected $publicHtmlDir;
-
-    /**t
-     * @var string
-     */
-    protected $vendorDir;
-
-    /**
-     * @var string
-     */
-    protected $accountDir;
-
-    /**
-     * @var string
-     */
-    protected $assetsDir;
-
-    /**
-     * @var string
-     */
-    protected $vitesseCmsSrcDir;
+    private string $coreAssetsDir;
+    private string $publicHtmlDir;
+    private string $vendorDir;
+    private string $accountDir;
+    private string $assetsDir;
+    private string $vitesseCmsSrcDir;
+    private array $accountMapping;
 
     public function initialize()
     {
@@ -62,6 +29,7 @@ class DeployTask extends Task
         $this->accountDir = $this->getDI()->getConfiguration()->getAccountDir();
         $this->assetsDir = $this->getDI()->getConfiguration()->getAssetsDir();
         $this->vitesseCmsSrcDir = $this->vendorDir . 'vitessecms/';
+        $this->eventsManager = $this->getDI()->getEventsManager();
     }
 
     public function assetsAction(): void
@@ -98,11 +66,10 @@ class DeployTask extends Task
 
     protected function copy(string $source, string $target): void
     {
-
-        if (FileUtil::copy($source, $target)) :
-            echo 'copied ' . $source . ' to ' . $target . PHP_EOL;
+        if (is_file($source) && FileUtil::copy($source, $target)) :
+            echo "\033[32m" . 'copied ' . $source . ' to ' . $target . PHP_EOL . "\e[0m";
         else :
-            echo 'failed copying of ' . $source . ' to ' . $target . PHP_EOL;
+            echo "\033[41m" . ' failed copying of ' . $source . ' to ' . $target . PHP_EOL . "\e[0m";
         endif;
     }
 
@@ -119,29 +86,22 @@ class DeployTask extends Task
             new Mapping(
                 $this->vitesseCmsSrcDir . 'core/src/Resources/js/*',
                 $this->publicHtmlDir . 'assets/default/js/'
-            ),
-            new Mapping(
-                $this->vendorDir . 'seiyria/bootstrap-slider/dist/bootstrap-slider.min.js',
-                $this->publicHtmlDir . 'assets/default/js/bootstrap-slider.min.js'
-            ),
-            new Mapping(
-                $this->vendorDir . 'itsjavi/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
-                $this->publicHtmlDir . 'assets/default/js/bootstrap-colorpicker.min.js'
-            ),
+            )
         ]);
 
-        $dto = new MappingDTO( $jsMapping, $this->vendorDir, $this->publicHtmlDir);
-        $jsMapping = $this->eventsManager->fire('Deploy:JSMapping', $dto);
-
+        $mappingDTO = new MappingDTO($jsMapping, $this->vendorDir, $this->publicHtmlDir);
+        echo 'a';
+        $this->getEventsManager()->fire('Deploy:JSMapping', $mappingDTO);
+        echo 'b';
         if (!empty($this->accountMapping['javascript'])):
             foreach ($this->accountMapping['javascript'] as $image) :
-                $jsMapping->add(new Mapping(
+                $mappingDTO->iterator->add(new Mapping(
                     __DIR__ . '/../../vitessecms/' . $image['source'],
                     __DIR__ . '/../../vitessecms/' . $image['target']));
             endforeach;
         endif;
 
-        return $jsMapping;
+        return $mappingDTO->iterator;
     }
 
     protected function getImageMapping(): MappingIterator
@@ -174,25 +134,18 @@ class DeployTask extends Task
 
     protected function getCssMapping(): MappingIterator
     {
-        $cssMapping = new MappingIterator([
-            new Mapping(
-                $this->vendorDir . 'seiyria/bootstrap-slider/dist/css/bootstrap-slider.min.css',
-                $this->coreAssetsDir . 'css/bootstrap-slider.min.css'
-            ),
-        ]);
-
-        $dto = new MappingDTO( $cssMapping, $this->vendorDir, $this->publicHtmlDir);
-        $cssMapping = $this->eventsManager->fire('Deploy:CssMapping', $dto);
+        $mappingDTO = new MappingDTO(new MappingIterator([]), $this->vendorDir, $this->publicHtmlDir);
+        $this->eventsManager->fire('Deploy:CssMapping', $mappingDTO);
 
         if (!empty($this->accountMapping['css'])):
             foreach ($this->accountMapping['css'] as $image) :
-                $cssMapping->add(new Mapping(
+                $mappingDTO->iterator->add(new Mapping(
                     __DIR__ . '/../../vitessecms/' . $image['source'],
                     __DIR__ . '/../../vitessecms/' . $image['target']));
             endforeach;
         endif;
 
-        return $cssMapping;
+        return $mappingDTO->iterator;
     }
 
     protected function buildCss(): void

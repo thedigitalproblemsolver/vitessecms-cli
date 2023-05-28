@@ -3,11 +3,11 @@
 namespace VitesseCms\Cli;
 
 use MongoDB\Client;
+use Phalcon\Autoload\Loader;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\FactoryDefault\Cli;
 use Phalcon\http\Request;
 use Phalcon\Incubator\MongoDB\Mvc\Collection\Manager as CollectionManager;
-use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use VitesseCms\Configuration\Services\ConfigService;
 use VitesseCms\Configuration\Utils\AccountConfigUtil;
@@ -23,10 +23,7 @@ use VitesseCms\Mustache\MustacheEngine;
 
 class BootstrapCli extends Cli
 {
-    /**
-     * @var string
-     */
-    protected $vitessecmsCoreDir;
+    private string $vitessecmsCoreDir;
 
     public function __construct()
     {
@@ -38,19 +35,13 @@ class BootstrapCli extends Cli
     public function loaderSystem(): Loader
     {
         $loader = new Loader();
-        $loader->registerDirs([
-            $this->vitessecmsCoreDir . 'Helpers/',
-            $this->vitessecmsCoreDir . 'Utils/'
-        ])->register();
+        $loader->addDirectory($this->vitessecmsCoreDir . 'Helpers/');
+        $loader->addDirectory($this->vitessecmsCoreDir . 'Utils/');
 
-        $loader->registerNamespaces(
-            [
-                'VitesseCms\\Core\\Helpers' => $this->vitessecmsCoreDir . 'Helpers/',
-                'VitesseCms\\Core\\Utils' => $this->vitessecmsCoreDir . 'Utils/',
-            ]
-        );
+        $loader->addNamespace('VitesseCms\\Core\\Helpers', $this->vitessecmsCoreDir . 'Helpers/');
+        $loader->addNamespace('VitesseCms\\Core\\Utils', $this->vitessecmsCoreDir . 'Utils/');
 
-        $loader = BootstrapUtil::addModulesToLoader(
+        BootstrapUtil::addModulesToLoader(
             $loader,
             SystemUtil::getModules($this->getConfiguration()),
             $this->getConfiguration()->getAccount()
