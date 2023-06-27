@@ -26,7 +26,7 @@
     "vitessecms/datafield": "^1.1.0",
     "vitessecms/install": "^1.0.0",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "^1.2.0",
+    "vitessecms/core": "^1.2.1",
     "vitessecms/user": "^1.0.0",
     "ext-zlib": "*"
   }
