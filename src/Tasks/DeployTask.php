@@ -90,9 +90,7 @@ class DeployTask extends Task
         ]);
 
         $mappingDTO = new MappingDTO($jsMapping, $this->vendorDir, $this->publicHtmlDir);
-        echo 'a';
         $this->getEventsManager()->fire('Deploy:JSMapping', $mappingDTO);
-        echo 'b';
         if (!empty($this->accountMapping['javascript'])):
             foreach ($this->accountMapping['javascript'] as $image) :
                 $mappingDTO->iterator->add(new Mapping(
