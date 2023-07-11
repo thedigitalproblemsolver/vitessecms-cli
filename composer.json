@@ -22,7 +22,7 @@
     }
   },
   "require": {
-    "vitessecms/datagroup": "^1.1.0",
+    "vitessecms/datagroup": "^1.2.0",
     "vitessecms/datafield": "^1.2.0",
     "vitessecms/install": "^1.0.2",
     "scssphp/scssphp": "^1.1",
