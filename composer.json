@@ -23,11 +23,11 @@
   },
   "require": {
     "vitessecms/datagroup": "^1.2.0",
-    "vitessecms/datafield": "^1.2.1",
+    "vitessecms/datafield": "^1.2.2",
     "vitessecms/install": "^1.0.2",
     "scssphp/scssphp": "^1.1",
-    "vitessecms/core": "^1.3.5",
-    "vitessecms/user": "^1.0.0",
+    "vitessecms/core": "^1.3.6",
+    "vitessecms/user": "^1.1.0",
     "ext-zlib": "*"
   }
 }
