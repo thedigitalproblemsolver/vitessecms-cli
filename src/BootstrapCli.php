@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Cli;
 
@@ -112,7 +114,13 @@ class BootstrapCli extends Cli
                     '.mustache' => function (ViewService $view): MustacheEngine {
                         return new MustacheEngine(
                             $view,
-                            new Engine(['partials_loader' => new Loader_FilesystemLoader($this->getConfiguration()->getCoreTemplateDir() . 'views/partials/')]),
+                            new Engine(
+                                [
+                                    'partials_loader' => new Loader_FilesystemLoader(
+                                        $this->getConfiguration()->getCoreTemplateDir() . 'views/partials/'
+                                    )
+                                ]
+                            ),
                             null
                         );
                     },
