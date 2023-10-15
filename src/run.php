@@ -1,7 +1,9 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace VitesseCms\Cli;
 
+use Dotenv\Dotenv;
 use Exception;
 use Throwable;
 use VitesseCms\Cli\Utils\CliUtil;
@@ -25,27 +27,30 @@ if (count($argv) < 4) {
     die();
 }
 
+$dotenv = Dotenv::createUnsafeImmutable(__DIR__ . '/../../../../');
+$dotenv->load();
+
 $_SERVER['HTTP_HOST'] = $argv[3];
 $_SERVER['SERVER_ADDR'] = '192.167.0.33';
 
 $di = new BootstrapCli();
 $di->setUrl();
-if($argv[1] !== 'install' && $argv[2] !== 'create' ) :
+if ($argv[1] !== 'install' && $argv[2] !== 'create') :
     $di->loadConfig();
     $di->loaderSystem();
     $di->database();
     $di->view();
-elseif($argv[1] === 'domain' && $argv[2] === 'create') :
+elseif ($argv[1] === 'domain' && $argv[2] === 'create') :
     $di->loadConfig();
     require __DIR__ . '/Tasks/DomainTask.php';
 else :
     DirectoryUtil::copy(
-        __DIR__.'/Resources/config/domain/example.com/',
-        __DIR__.'/../../../../config/domain/example.com/'
+        __DIR__ . '/Resources/config/domain/example.com/',
+        __DIR__ . '/../../../../config/domain/example.com/'
     );
     DirectoryUtil::copy(
-        __DIR__.'/Resources/config/account/example/',
-        __DIR__.'/../../../../config/account/example/'
+        __DIR__ . '/Resources/config/account/example/',
+        __DIR__ . '/../../../../config/account/example/'
     );
     $di->loadConfig();
     require __DIR__ . '/Tasks/InstallTask.php';

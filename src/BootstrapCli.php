@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Cli;
 
@@ -90,7 +92,11 @@ class BootstrapCli extends Cli
             (new Client($configuration->getMongoUri()))
                 ->selectDatabase($configuration->getMongoDatabase())
         );
-        $this->setShared('collectionsManager', new CollectionManager());
+        $collectionManager = new CollectionManager();
+        $this->setShared('collectionsManager', $collectionManager);
+
+        //this is needed for backwards compatibility
+        $this->setShared('collectionManager', $collectionManager);
 
         return $this;
     }
@@ -112,7 +118,13 @@ class BootstrapCli extends Cli
                     '.mustache' => function (ViewService $view): MustacheEngine {
                         return new MustacheEngine(
                             $view,
-                            new Engine(['partials_loader' => new Loader_FilesystemLoader($this->getConfiguration()->getCoreTemplateDir() . 'views/partials/')]),
+                            new Engine(
+                                [
+                                    'partials_loader' => new Loader_FilesystemLoader(
+                                        $this->getConfiguration()->getCoreTemplateDir() . 'views/partials/'
+                                    )
+                                ]
+                            ),
                             null
                         );
                     },
