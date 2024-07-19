@@ -15,7 +15,7 @@ class InstallTask extends Task
         $this->rootDir = __DIR__ . '/../../../../../';
     }
 
-    public function finishAction(array $params): void
+    public function finishAction(): void
     {
         DirectoryUtil::copy(
             $this->rootDir.'vendor/vitessecms/install/src/Resources/files/public_html',
