@@ -53,6 +53,8 @@ else :
         __DIR__ . '/../../../../config/account/example/'
     );
     $di->loadConfig();
+    $di->setShared('request', new Request());
+    $di->get('request');
     require __DIR__ . '/Tasks/InstallTask.php';
 endif;
 
